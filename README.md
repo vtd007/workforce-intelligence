@@ -50,7 +50,7 @@ Attrition share = employees with Attrition = "Yes" / total employees in the data
 
 ## Repository structure
 - notebooks/01_data_inspection.ipynb: data quality checks
-- notebooks/02_analysis.ipynb: cleaning, attrition analysis, charts
+- notebooks/02_Analysis.ipynb: cleaning, attrition analysis, charts
 - notebooks/03_sql.ipynb: SQL queries
 - sql/workforce_queries.sql: query file
 - visualisations/: charts and dashboard screenshot
