@@ -1,0 +1,35 @@
+-- Workforce Intelligence: SQL queries
+-- Table: employees (from data/processed/hr_clean.csv)
+
+-- Query 1: Overall attrition
+SELECT COUNT(*) AS headcount,
+       SUM(AttritionFlag) AS leavers,
+       ROUND(100.0 * SUM(AttritionFlag) / COUNT(*), 1) AS attrition_pct
+FROM employees;
+
+-- Query 2: Attrition by job role (roles with 50+ employees)
+SELECT JobRole,
+       COUNT(*) AS headcount,
+       SUM(AttritionFlag) AS leavers,
+       ROUND(100.0 * SUM(AttritionFlag) / COUNT(*), 1) AS attrition_pct
+FROM employees
+GROUP BY JobRole
+HAVING COUNT(*) >= 50
+ORDER BY attrition_pct DESC;
+
+-- Query 3: Attrition by overtime and age band
+SELECT OverTime, AgeBand,
+       COUNT(*) AS headcount,
+       ROUND(100.0 * AVG(AttritionFlag), 1) AS attrition_pct
+FROM employees
+GROUP BY OverTime, AgeBand
+ORDER BY attrition_pct DESC;
+
+-- Query 4: Overtime employees in the lowest pay quartile, by department
+SELECT Department,
+       COUNT(*) AS headcount,
+       ROUND(100.0 * AVG(AttritionFlag), 1) AS attrition_pct
+FROM employees
+WHERE OverTime = 'Yes' AND IncomeBand = 'Q1 Lowest'
+GROUP BY Department
+ORDER BY attrition_pct DESC;
